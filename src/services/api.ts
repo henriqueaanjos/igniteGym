@@ -14,7 +14,7 @@ type PromiseType = {
 }
 
  const api = axios.create({
-    baseURL: 'http://localhost:3333'
+    baseURL: 'http://192.168.0.4:3333'
 }) as APIInstanceProps;
 
 let failedQueue: Array<PromiseType> = []
@@ -70,7 +70,6 @@ api.registerInterceptTokenManager = signOut => {
 						failedQueue.forEach((request) => {
 							request.onFailure(error);
 						})
-
 						signOut();
 						reject(error);
 					}finally{
@@ -83,7 +82,7 @@ api.registerInterceptTokenManager = signOut => {
 		}
 
 
-
+		console.log(requestError);
 
 		if(requestError.response && requestError.response.data){
 			return Promise.reject(new AppError(requestError.response.data.message));

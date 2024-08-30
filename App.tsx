@@ -7,6 +7,11 @@ import { THEME } from 'src/theme';
 import { Routes } from '@routes/index';
 import { AuthContextProvider } from 'src/context/AuthContext';
 
+import { OneSignal } from "react-native-onesignal"
+
+OneSignal.initialize("33807c43-e0c2-4632-b33e-b31e43cbfb92");
+OneSignal.Notifications.requestPermission(true);
+
 export default function App() {
   const [ fontsLoaded ] = useFonts({Roboto_400Regular, Roboto_700Bold});
   return (

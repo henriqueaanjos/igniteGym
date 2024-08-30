@@ -13,6 +13,7 @@ import { api } from "@services/api";
 import { AppError } from "@utils/AppError";
 import { ExerciseDTO } from "@dtos/ExerciseDTO";
 import { Loading } from "@components/Loading";
+import { tagExerciseComplete } from "src/notifications/notificationTags";
 
 type RouteParams = {
     exerciseId: string
@@ -36,6 +37,7 @@ export function Exercise(){
         try {
             setSendingRegister(true);
             await api.post('/history', {exercise_id : exerciseId });
+            tagExerciseComplete();
             toast.show({
                 title: 'Parabéns! Exercicio registrado no seu histórico.',
                 placement: 'top',

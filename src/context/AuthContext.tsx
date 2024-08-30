@@ -3,6 +3,7 @@ import { api } from "@services/api";
 import { storageAuthTokenSave, storageAuthTokenGet, storageAuthTokenRemove } from "@storage/storageAuthToken";
 import { storageUserGet, storageUserRemove, storageUserSave } from "@storage/storageUser";
 import { ReactNode, createContext, useEffect, useState } from "react";
+import { tagUserSignIn, tagUserSignOut } from "src/notifications/notificationTags";
 
 
 
@@ -48,6 +49,7 @@ export function AuthContextProvider({children}: AuthContextProviderProps){
             if(data.user && data.token && data.refresh_token){
                 await storageUserAndTokenSave(data.user, data.token, data.refresh_token);
                 userAndTokenUpdate(data.user, data.token);
+                tagUserSignIn(data.user.name);
             }
         } catch (error) {
             throw error;
@@ -77,6 +79,7 @@ export function AuthContextProvider({children}: AuthContextProviderProps){
             setUser({} as UserDTO);
             await storageUserRemove();
             await storageAuthTokenRemove();
+            tagUserSignOut();
         } catch (error) {
             throw error;
         }finally{
